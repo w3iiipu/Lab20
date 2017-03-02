@@ -121,7 +121,46 @@ public class HomeController {
 
     }
 
-
+//    @RequestMapping("processItem")
+//
+//    public ModelAndView processItemMethod
+//            (
+//             @RequestParam("ItemName") String ItemName,
+//             @RequestParam("Desc") String Description,
+//             @RequestParam("Quantity") String Quantity,
+//             @RequestParam("RPrice") String RPrice,
+//             @RequestParam("CPrice") String CPrice) throws ClassNotFoundException, SQLException {
+//
+//            String url;
+//            String username;
+//            String password;
+//
+//            url = "jdbc:mysql://localhost:3306/GCCoffee";
+//            username = "GCAdmin";
+//            password = "boss";
+//
+//            Class.forName("com.mysql.jdbc.Driver");
+//
+//            Connection con = DriverManager.getConnection(url, username, password);
+//
+//            PreparedStatement pst = con.prepareStatement("insert into items(Name, Description, Quantity, Price, Cost)" + "values(?,?,?,?,?)");
+//
+//            pst.setString(1, ItemName);
+//            pst.setString(2, Description);
+//            pst.setString(3, Quantity);
+//            pst.setString(4, RPrice);
+//            pst.setString(5, CPrice);
+//            pst.executeUpdate();
+//
+////          7 close connection
+//            pst.close();
+//            con.close();
+//
+//            ArrayList<Inventory> inventoryList = getInventory();
+//
+////          inside of if loop goes onto display confirm page
+//            return new ModelAndView("DisplayItems", "cInventory", inventoryList);
+//        }
 
 }
 
