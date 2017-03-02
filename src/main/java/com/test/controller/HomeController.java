@@ -1,14 +1,14 @@
 package com.test.controller;
 
+import com.test.model.Inventory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.ArrayList;
 
 @Controller
 public class HomeController {
@@ -78,4 +78,50 @@ public class HomeController {
         }
 
     }
+
+    public ArrayList<Inventory> getInventory() {
+        String selectInventory = "select itemid, name, description, quantity, price from items";
+        String url = "jdbc:mysql://localhost:3306/GCCoffee";
+        String userName = "root";
+        String password = "admin";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(url, userName, password);
+
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery(selectInventory);
+
+            ArrayList<Inventory> inventoryList = new ArrayList<Inventory>();
+            while (rs.next()) {
+                String ItemID = rs.getString(1);
+                String Name = rs.getString(2);
+                String Description = rs.getString(3);
+                int Quantity = rs.getInt(4);
+                BigDecimal Price = rs.getBigDecimal(5);
+
+                Inventory temp = new Inventory(ItemID, Name, Description, Quantity, Price);
+
+                inventoryList.add(temp);
+            }
+            return inventoryList;
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @RequestMapping("DisplayItems")
+    public ModelAndView viewInventory() {
+        ArrayList<Inventory> inventoryList = getInventory();
+        return new
+                ModelAndView("DisplayItems", "cInventory", inventoryList);
+
+    }
+
+
+
 }
+
